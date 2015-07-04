@@ -79,31 +79,31 @@ function vscf_shortcode($atts) {
 		<div class="mailing-list-inner col-sm-8 col-lg-6 col-sm-offset-1 col-lg-offset-2">
 			<h2>Subscribe to our mailing list</h2>
 			<form method="post" action="' . $subscribe_address . '" name="subscribeform">
-				<div>
+				<div class="form-group">
 					<label class="desc" id="ot-mail" for="email">' . $label_email . '</label>
 					<div>
-						<input id="field-ot-mail" name="email" type="email" spellcheck="false" value="" maxlength="255" tabindex="1">
+						<input id="field-ot-mail" class="form-control" name="email" type="email" spellcheck="false" value="" maxlength="255" tabindex="1">
 					</div>
 				</div>	
-				<div>
+				<div class="form-group">
 					<label class="desc" id="ot-mail-confirm" for="emailconfirm">' . $label_confirm_email . '</label>
 					<div>
-						<input id="field-ot-mail-confirm" name="emailconfirm" type="email" spellcheck="false" value="" maxlength="255" tabindex="2">
+						<input id="field-ot-mail-confirm" class="form-control" name="emailconfirm" type="email" spellcheck="false" value="" maxlength="255" tabindex="2">
 					</div>
 				</div>
-				<div>
+				<div class="form-group">
 					<label class="desc" id="ot-first-name" for="first-name">' . $label_first_name . '</label>
 					<div>
-						<input id="field-ot-first-name" name="first-name" type="text" class="field text fn" value="" tabindex="3">
+						<input id="field-ot-first-name" class="form-control" name="first-name" type="text" class="field text fn" value="" tabindex="3">
 					</div>
 				</div>
-				<div>
+				<div class="form-group">
 					<label class="desc" id="ot-last-name" for="last-name">' . $label_surname . '</label>
 					<div>
-						<input id="field-ot-last-name" name="last-name" type="text" class="field text fn" value="" tabindex="4">
+						<input id="field-ot-last-name" class="form-control" name="last-name" type="text" class="field text fn" value="" tabindex="4">
 					</div>
 				</div>
-				<div>
+				<div class="form-group">
 					<div>
 						<input name="list[5]" value="signup" type="hidden">
 						<input name="listname[5]" value="Opening Times General List" type="hidden">
