@@ -77,41 +77,49 @@ function vscf_shortcode($atts) {
 	// The contact form with error messages
 	$email_form = '
 		<div class="mailing-list-inner col-sm-8 col-lg-6 col-sm-offset-1 col-lg-offset-2">
-			<h2>Subscribe to our mailing list</h2>
-			<form method="post" action="' . $subscribe_address . '" name="subscribeform">
-				<div class="form-group">
-					<label class="desc" id="ot-mail" for="email">' . $label_email . '</label>
-					<div>
-						<input id="field-ot-mail" class="form-control" name="email" type="email" spellcheck="false" value="" maxlength="255" tabindex="1">
+			<form class="form-horizontal row" method="post" action="' . $subscribe_address . '" name="subscribeform">
+				<fieldset>
+					<div class="form-group">
+						<legend class="col-sm-3 control-label">Subscribe to our mailing list</legend>
 					</div>
-				</div>	
-				<div class="form-group">
-					<label class="desc" id="ot-mail-confirm" for="emailconfirm">' . $label_confirm_email . '</label>
-					<div>
-						<input id="field-ot-mail-confirm" class="form-control" name="emailconfirm" type="email" spellcheck="false" value="" maxlength="255" tabindex="2">
+					<div class="form-group">
+						<label class="col-sm-3 control-label" id="ot-mail" for="email">' . $label_email . '</label>
+						<div class="col-sm-4">
+							<input id="field-ot-mail" class="form-control" name="email" type="email" spellcheck="false" value="" maxlength="255" tabindex="1">
+						</div>
+					</div>	
+					<div class="form-group">
+						<label class="col-sm-3 control-label" id="ot-mail-confirm" for="emailconfirm">' . $label_confirm_email . '</label>
+						<div class="col-sm-4">
+							<input id="field-ot-mail-confirm" class="form-control" name="emailconfirm" type="email" spellcheck="false" value="" maxlength="255" tabindex="2">
+						</div>
 					</div>
-				</div>
-				<div class="form-group">
-					<label class="desc" id="ot-first-name" for="first-name">' . $label_first_name . '</label>
-					<div>
-						<input id="field-ot-first-name" class="form-control" name="first-name" type="text" class="field text fn" value="" tabindex="3">
+					<div class="form-group">
+						<label class="col-sm-3 control-label" id="ot-first-name" for="first-name">' . $label_first_name . '</label>
+						<div class="col-sm-4">
+							<input id="field-ot-first-name" class="form-control" name="first-name" type="text" class="field text fn" value="" tabindex="3">
+						</div>
 					</div>
-				</div>
-				<div class="form-group">
-					<label class="desc" id="ot-last-name" for="last-name">' . $label_surname . '</label>
-					<div>
-						<input id="field-ot-last-name" class="form-control" name="last-name" type="text" class="field text fn" value="" tabindex="4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label" id="ot-last-name" for="last-name">' . $label_surname . '</label>
+						<div class="col-sm-4">
+							<input id="field-ot-last-name" class="form-control" name="last-name" type="text" class="field text fn" value="" tabindex="4">
+						</div>
 					</div>
-				</div>
-				<div class="form-group">
-					<div>
-						<input name="list[5]" value="signup" type="hidden">
-						<input name="listname[5]" value="Opening Times General List" type="hidden">
-						<input id="ot-subscribe" name="subscribe" type="submit" value="' . $label_submit . '" class="ot-button" onclick="return checkform();" tabindex="5">
+					<div class="form-group">
+						<div class="col-sm-offset-3 col-sm-7">
+							<input name="list[5]" value="signup" type="hidden">
+							<input name="listname[5]" value="Opening Times General List" type="hidden">
+							<input id="ot-subscribe" name="subscribe" type="submit" value="' . $label_submit . '" class="ot-button" onclick="return checkform();" tabindex="5">
+						</div>
 					</div>
-				</div>
+					<div class="form-group">
+						<div class="col-sm-offset-3 col-sm-7">
+							<a href="' . $unsubscribe_address . '" class="ot-mail-unsubscribe">' . $label_unsubscribe . '</a>
+						</div>
+					</div>
+				</fieldset>
 			</form>
-			<a href="' . $unsubscribe_address . '" class="ot-mail-unsubscribe">' . $label_unsubscribe . '</a>
 		</div>';
 
 	return $email_form;
