@@ -97,7 +97,7 @@ add_filter ( 'manage_edit-post_columns', 'rkv_remove_columns' );
 add_filter ( 'manage_edit-page_columns', 'rkv_remove_columns' );
 
 /* 
- * Create a parent-child pot relationship between the reading and article post types.
+ * Create a parent-child post relationship between the reading and article post types.
  *
  * http://justintadlock.com/archives/2013/10/07/post-relationships-parent-to-child
  */
@@ -122,10 +122,10 @@ function opening_times_reading_parent_meta_box( $post ) {
             'order'       => 'DESC', 
             'numberposts' => -1,
 			'post_status' => array(					
-							'publish',
-							'future',
-							'private',
-							),
+				'publish',
+				'future',
+				'private',
+			),
         )
     );
     if ( !empty( $parents ) ) {
