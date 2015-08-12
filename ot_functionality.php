@@ -44,8 +44,8 @@ include_once( OT_DIR . '/inc/shortcodes.php' );
 include_once( OT_DIR . '/inc/chat_format.php' );
 include_once( OT_DIR . '/inc/housekeeping.php' );
 include_once( OT_DIR . '/inc/editor-style-refresh.php' );
-//include_once( OT_DIR . '/inc/metaboxes.php' );
-include_once( OT_DIR . '/inc/metaboxes-cmb2.php' );
+include_once( OT_DIR . '/inc/cmb2-metaboxes.php' );
+include_once( OT_DIR . '/inc/cmb2-attached-posts-field.php' );
 /* NEW */
 include_once( OT_DIR . '/inc/customizer_backstretch.php' );
 include_once( OT_DIR . '/inc/ot_contact_form.php' );

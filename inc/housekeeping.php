@@ -96,47 +96,6 @@ function rkv_remove_columns( $columns ) {
 add_filter ( 'manage_edit-post_columns', 'rkv_remove_columns' );
 add_filter ( 'manage_edit-page_columns', 'rkv_remove_columns' );
 
-/* 
- * Create a parent-child post relationship between the reading and article post types.
- *
- * http://justintadlock.com/archives/2013/10/07/post-relationships-parent-to-child
- */
-add_action( 'add_meta_boxes_article', 'opening_times_add_meta_boxes' );
-function opening_times_add_meta_boxes( $post ) {
-    add_meta_box(
-        'my-place-parent',
-        __( 'Issue', 'opening_times' ),
-        'opening_times_reading_parent_meta_box',
-        $post->post_type,
-        'normal',
-        'high'
-    );
-}
-
-/* Displays the meta box. */
-function opening_times_reading_parent_meta_box( $post ) {
-    $parents = get_posts(
-        array(
-            'post_type'   => 'reading', 
-            'orderby'     => 'title', 
-            'order'       => 'DESC', 
-            'numberposts' => -1,
-			'post_status' => array(					
-				'publish',
-				'future',
-				'private',
-			),
-        )
-    );
-    if ( !empty( $parents ) ) {
-        echo '<select name="parent_id" class="widefat">'; // !Important! Don't change the 'parent_id' name attribute.
-        foreach ( $parents as $parent ) {
-            printf( '<option value="%s"%s>%s</option>', esc_attr( $parent->ID ), selected( $parent->ID, $post->post_parent, false ), esc_html( $parent->post_title ) );
-        }
-        echo '</select>';
-    }
-}
-
 /*
  * Clean up formatting in shortcodes
  */

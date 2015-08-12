@@ -231,3 +231,44 @@ function ot_featured_work_take_overs_metabox() {
 		'type' 		 => 'text_date_timestamp',
 	) );
 }
+
+/**
+ * Attached Posts field for CMB2.
+ *
+ * Define the metabox and field configurations.
+ *
+ * @param  array $meta_boxes
+ * @return array
+ */
+add_action( 'cmb2_init', 'ot_attached_posts_field_metaboxes' );
+function ot_attached_posts_field_metaboxes() {
+	$prefix = '_ot_';
+
+	$attached_posts = new_cmb2_box( array(
+		'id'           => $prefix . 'attached_posts_field',
+		'title'        => __( 'Attached Articles', 'cmb2' ),
+		'object_types' => array( 'reading' ),
+		'context'      => 'normal',
+		'priority'     => 'high',
+		'show_names'   => false,
+	) );
+	$attached_posts->add_field( array(
+		'name'    => __( 'Attached Posts', 'cmb2' ),
+		'desc'    => __( 'Drag articles from the left column to the right column to attach them to this issue.<br />You may rearrange the order of the articles in the right column by dragging and dropping.', 'cmb2' ),
+		'id'      => $prefix . 'attached_articles',
+		'type'    => 'custom_attached_posts',
+		'options' => array(
+			'show_thumbnails' => true, // Show thumbnails on the left
+			'filter_boxes'    => true, // Show a text box for filtering the results
+			'query_args' 	  => array(
+				'author' => -9, 
+				'order' => 'DESC',
+				'orderby' => 'date',
+				'posts_per_page' => -1, 
+				'post_type' => array( 
+					'article', 
+				) 
+			), // override the get_posts args
+		)
+	) );
+}
