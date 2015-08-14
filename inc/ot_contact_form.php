@@ -1,128 +1,179 @@
 <?php
 /**
-* Plugin Name: Very Simple Contact Form
-* Description: This is a very simple contact form. Use shortcode [contact] to display form on page or use the widget. For more info please check readme file.
-* Version: 2.7
-* Author: Guido van der Leest
-* Author URI: http://www.guidovanderleest.nl
+* Plugin Name: Opening Times Mailing List Subscribe Form
+* Description: A simple mailing list widget. Outputs a phpList mailing list signup form.
+* Version: 1.0
+* Author: Paul Flannery
+* Author URI: http://www.paulflannery.co.uk
 * License: GNU General Public License v3 or later
 * License URI: http://www.gnu.org/licenses/gpl-3.0.html
-* Text Domain: verysimple
+* Text Domain: opening_times
 * Domain Path: translation
+* Inspired By: https://wordpress.org/plugins/very-simple-contact-form/
+* Guided By: https://github.com/Automattic/jetpack/blob/master/modules/widgets/image-widget.php
 */
-// https://wordpress.org/plugins/very-simple-contact-form/
 
-// The shortcode
-function vscf_shortcode($atts) {
-	extract(shortcode_atts(array(
-		"subscribe_address"				=> __('http://otdac.org/lists/?p=subscribe&id=2', 'verysimple') ,
-		"unsubscribe_address"			=> __('http://otdac.org/lists/?p=unsubscribe&amp;id=2', 'verysimple') ,
-		"label_first_name"              => __('First Name', 'verysimple') ,
-		"label_surname"                 => __('Surname', 'verysimple') ,
-		"label_email"                   => __('Email Address', 'verysimple') ,
-		"label_confirm_email"           => __('Confirm Email Address', 'verysimple') ,
-		"label_submit"                  => __('Subscribe', 'verysimple') ,
-		"label_unsubscribe"             => __('Unsubscribe', 'verysimple') ,
-		"error_empty"                   => __("Please fill in all the required fields", "verysimple"),
-		"error_form_name"               => __('Please enter at least 3 characters', 'verysimple') ,
-		"error_form_subject"            => __('Please enter at least 3 characters', 'verysimple') ,
-		"error_form_message"            => __('Please enter at least 10 characters', 'verysimple') ,
-		"error_email"                   => __("Please enter a valid email", "verysimple"),
-		//"success"                       => __("Thanks for your message! I will contact you as soon as I can.", "verysimple"),
-	), $atts));
+// Prevent direct file access
+if ( ! defined ( 'ABSPATH' ) ) {
+	exit;
+}
 
-	if (($_SERVER['REQUEST_METHOD'] == 'POST') && isset($_POST['form_send']) ) {
+// Create the widget 
+class Opening_Times_Mailing_List extends WP_Widget {
 
-		// Get posted data and sanitize them
-		$post_data = array(
-			'form_name'             => sanitize_text_field($_POST['form_name']),
-			'email'                 => sanitize_email($_POST['email']),
-			'form_subject'          => sanitize_text_field($_POST['form_subject']),
-			'form_message'          => sanitize_text_field($_POST['form_message']),
-			'form_sum'              => sanitize_text_field($_POST['form_sum']),
-			'form_firstname'        => sanitize_text_field($_POST['form_firstname']),
-			'form_lastname'         => sanitize_text_field($_POST['form_lastname'])
-		);
+	/**
+	 * Sets up the widgets name etc
+	 */
+    public function __construct() {
+        parent::__construct(
+            // Base ID of your widget
+            'ot_mailing_list', 
 
-		$error = false;
-		$required_fields = array("form_name", "email", "form_subject", "form_message");
-		$security_fields = array("form_firstname", "form_lastname");
+            // Widget name will appear in UI
+            __('phpList Mailing List Widget', 'opening_times'), 
 
-		foreach ($required_fields as $required_field) {
-			$value = stripslashes(trim($post_data[$required_field]));
+            // Widget description
+            array(
+                'classname'   => 'ot_mailling_list_widget',
+                'description' => __( 'A simple widget to create a phpList mailing list sign up form.', 'opening_times' )
+            )
+        );
+    }
 
-			// Displaying error message if validation failed for each input field
-			if(((($required_field == "form_name") || ($required_field == "form_subject")) && strlen($value)<3) || (($required_field == "form_message") && strlen($value)<10) || empty($value)) {
-				$error_class[$required_field] = "error";
-				$error_msg[$required_field] = ${"error_".$required_field};
-				$error = true;
-				$result = $error_empty;
-			}
-			$form_data[$required_field] = $value;
-		}
+	/**
+	 * Outputs the content of the widget
+	 *
+	 * @param array $args
+	 * @param array $instance
+	 */
+     
+	public function widget( $args, $instance ) {
+		extract( $args );
 
-		foreach ($security_fields as $security_field) {
-			$value = stripslashes(trim($post_data[$security_field]));
+		echo $before_widget;
 
-			// Not sending message if validation failed for each input field
-			if ((($security_field == "form_firstname") || ($security_field == "form_lastname")) && strlen($value)>0) {
-				$error_class[$security_field] = "error";
-				$error = true;
-			}
-			$form_data[$security_field] = $value;
-		}
+        $instance = wp_parse_args( $instance, array(
+			'title' => '',
+			'subscribe' => ''
+		) );
 
+        $title = apply_filters( 'widget_title', $instance['title'] );
+
+        if ( $title ) {
+            echo $before_title . $title . $after_title;
+        }
+        
+        if ( '' != $instance['subscribe'] ) {
+            $output = '<form class="form-horizontal row" method="post" action="' . esc_attr( $instance['subscribe'] ) . '" name="subscribeform"';
+            $output .= '<fieldset>';
+            $output .= '<div class="form-group">
+                            <legend class="col-sm-3 control-label">' . esc_html__( 'Subscribe to our mailing list', 'opening_times' ) . '</legend>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" id="ot-mail" for="email">' . esc_html__( 'Email Address', 'opening_times' ) . '</label>
+                            <div class="col-sm-4">
+                                <input id="field-ot-mail" class="form-control" name="email" type="email" value="" maxlength="255" required="required" tabindex="1">
+                            </div>
+                        </div>	
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" id="ot-mail-confirm" for="emailconfirm">' . esc_html__( 'Confirm Email', 'opening_times' ) . '</label>
+                            <div class="col-sm-4">
+                                <input id="field-ot-mail-confirm" class="form-control" name="emailconfirm" type="email" value="" maxlength="255" required="required" tabindex="2">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" id="ot-first-name" for="first-name">' . esc_html__( 'First Name', 'opening_times' ) . '</label>
+                            <div class="col-sm-4">
+                                <input id="field-ot-first-name" class="form-control" name="first-name" type="text" class="field text fn" value="" required="required" tabindex="3">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" id="ot-last-name" for="last-name">' . esc_html__( 'Surname', 'opening_times' ) . '</label>
+                            <div class="col-sm-4">
+                                <input id="field-ot-last-name" class="form-control" name="last-name" type="text" class="field text fn" value="" tabindex="4">
+                            </div>
+                        </div>';
+            if ( '' != $instance['listID'] ) {
+                $output .= '<div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-7">
+                                    <input name="list[' . esc_attr( $instance['listID'] ) . ']" value="signup" type="hidden">
+                                    <input name="listname[' . esc_attr( $instance['listID'] ) . ']" value="Opening Times General List" type="hidden">
+                                    <input id="ot-subscribe" name="subscribe" type="submit" value="' . esc_html__( 'Subscribe', 'opening_times' ) .'" class="ot-button" onclick="return checkform();" tabindex="5">
+                                </div>
+                            </div>';
+            }
+            if ( '' != $instance['unsubscribe'] ) {
+                $output .= '<div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-7">
+                                    <a href="' . esc_attr( $instance['unsubscribe'] ) . '" class="ot-mail-unsubscribe">' . esc_html__( 'Unubscribe', 'opening_times' ) . '</a>
+                                </div>
+                            </div>';
+            }
+            $output .= '</fieldset>';
+            $output .= '</form>';
+            
+            echo '<div class="mailing-list-inner col-sm-8 col-lg-6 col-sm-offset-1 col-lg-offset-2">' . $output . '</div>';
+        }
+        echo "\n" . $after_widget;     
 	}
-	
-	// The contact form with error messages
-	$email_form = '
-		<div class="mailing-list-inner col-sm-8 col-lg-6 col-sm-offset-1 col-lg-offset-2">
-			<form class="form-horizontal row" method="post" action="' . $subscribe_address . '" name="subscribeform">
-				<fieldset>
-					<div class="form-group">
-						<legend class="col-sm-3 control-label">Subscribe to our mailing list</legend>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-3 control-label" id="ot-mail" for="email">' . $label_email . '</label>
-						<div class="col-sm-4">
-							<input id="field-ot-mail" class="form-control" name="email" type="email" spellcheck="false" value="" maxlength="255" tabindex="1">
-						</div>
-					</div>	
-					<div class="form-group">
-						<label class="col-sm-3 control-label" id="ot-mail-confirm" for="emailconfirm">' . $label_confirm_email . '</label>
-						<div class="col-sm-4">
-							<input id="field-ot-mail-confirm" class="form-control" name="emailconfirm" type="email" spellcheck="false" value="" maxlength="255" tabindex="2">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-3 control-label" id="ot-first-name" for="first-name">' . $label_first_name . '</label>
-						<div class="col-sm-4">
-							<input id="field-ot-first-name" class="form-control" name="first-name" type="text" class="field text fn" value="" tabindex="3">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-3 control-label" id="ot-last-name" for="last-name">' . $label_surname . '</label>
-						<div class="col-sm-4">
-							<input id="field-ot-last-name" class="form-control" name="last-name" type="text" class="field text fn" value="" tabindex="4">
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-offset-3 col-sm-7">
-							<input name="list[5]" value="signup" type="hidden">
-							<input name="listname[5]" value="Opening Times General List" type="hidden">
-							<input id="ot-subscribe" name="subscribe" type="submit" value="' . $label_submit . '" class="ot-button" onclick="return checkform();" tabindex="5">
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-offset-3 col-sm-7">
-							<a href="' . $unsubscribe_address . '" class="ot-mail-unsubscribe">' . $label_unsubscribe . '</a>
-						</div>
-					</div>
-				</fieldset>
-			</form>
-		</div>';
+    
+    /**
+	 * Processing and sanitizing widget options on save
+	 *
+     * @see WP_Widget::update()
+     *
+	 * @param array $new_instance The new options
+	 * @param array $old_instance The previous options
+     *
+     * @return array Updated safe values to be saved.
+	 */
+	public function update( $new_instance, $old_instance ) {
+		// processes widget options to be saved
+        $instance = $old_instance;
 
-	return $email_form;
-} 
+        $instance['title']       = strip_tags( $new_instance['title'] );
+        $instance['subscribe']   = esc_url( $new_instance['subscribe'], null, 'display' );
+        $instance['unsubscribe'] = esc_url( $new_instance['unsubscribe'], null, 'display' );
+        $instance['listID']      = absint( $new_instance['listID'] );
 
-add_shortcode('contact', 'vscf_shortcode');
+        return $instance;
+	}
+
+    /**
+	 * Back-end widget form.
+	 *
+	 * @see WP_Widget::form()
+	 *
+	 * @param array $instance Previously saved values from database.
+	 */
+	public function form( $instance ) {
+        // Defaults
+		$instance = wp_parse_args( (array) $instance, array( 'title' => '', 'subscribe' => '', 'unsubscribe' => '', 'listID' => '' ) );
+         
+		// Outputs the options form on admin
+        $title       = esc_attr( $instance['title'] );
+        $subscribe   = esc_url( $instance['subscribe'], null, 'display' );
+        $unsubscribe = esc_url( $instance['unsubscribe'], null, 'display' );
+        $listID      = absint( $instance['listID'] );
+
+        echo '<p><label for="' . $this->get_field_id( 'title' ) . '">' . esc_html__( 'Widget title:', 'opening_times' ) . '</label>
+            <input class="widefat" id="' . $this->get_field_id( 'title' ) . '" name="' . $this->get_field_name( 'title' ) . '" type="text" value="' . $title . '" />
+            </p>
+            <p><label for="' . $this->get_field_id( 'subscribe' ) . '">' . esc_html__( 'Subscribe Link:', 'opening_times' ) . '</label>
+            <input class="widefat" id="' . $this->get_field_id( 'subscribe' ) . '" name="' . $this->get_field_name( 'subscribe' ) . '" type="text" value="' . $subscribe . '" />
+            </p>
+            <p><label for="' . $this->get_field_id( 'unsubscribe' ) . '">' . esc_html__( 'Unsubscribe Link:', 'opening_times' ) . '</label>
+            <input class="widefat" id="' . $this->get_field_id( 'unsubscribe' ) . '" name="' . $this->get_field_name( 'unsubscribe' ) . '" type="text" value="' . $unsubscribe . '" />
+            </p>
+            <p><label for="' . $this->get_field_id( 'listID' ) . '">' . esc_html__( 'List ID:', 'opening_times' ) . '</label>
+            <input class="widefat" id="' . $this->get_field_id( 'listID' ) . '" name="' . $this->get_field_name( 'listID' ) . '" type="text" value="' . $listID . '" />
+            </p>';
+	}
+}
+
+/**
+ * Register and load the widget for use in Appearance -> Widgets
+ */
+add_action( 'widgets_init', function() {
+    register_widget( 'Opening_Times_Mailing_List' );
+});

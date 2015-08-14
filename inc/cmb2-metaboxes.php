@@ -180,6 +180,75 @@ function ot_editorial_intro_metabox() {
 	) );
 }
 
+add_action( 'cmb2_init', 'ot_editor_bio_metabox' );
+function ot_editor_bio_metabox() {
+	$prefix = '_ot_';
+
+	$editor_bio = new_cmb2_box( array(
+		'id'            => $prefix . 'editor_bio',
+		'title'         => __( 'Editor Bio', 'opening_times' ),
+		'object_types'  => array( 'reading', ),
+		'context'   	=> 'normal',
+		'priority'   	=> 'high',
+		'show_names' 	=> true,
+	) );
+	$editor_bio->add_field( array(
+		'name'       => __( 'Bio', 'opening_times' ),
+		'desc'       => __( 'Enter a short bio for the editor.', 'opening_times' ),
+		'id'         => $prefix . 'editor_bio',
+		'type'       => 'textarea',
+	) );
+	$editor_bio->add_field( array(
+		'name' => __( 'Link', 'cmb2' ),
+		'desc' => __( 'Enter a link, or links for the editor. One per row.', 'cmb2' ),
+		'id'   => $prefix . 'editor_link',
+		'type' => 'text_url',
+		'protocols'  => array('http', 'https', 'ftp', 'ftps', 'mailto', 'news', 'irc', 'gopher', 'nntp', 'feed', 'telnet'), // Array of allowed protocols
+		'repeatable' => true,
+	) );
+}
+
+/**
+ * Attached Posts field for CMB2.
+ *
+ * Define the metabox and field configurations.
+ *
+ * @param  array $meta_boxes
+ * @return array
+ */
+add_action( 'cmb2_init', 'ot_attached_posts_field_metaboxes' );
+function ot_attached_posts_field_metaboxes() {
+	$prefix = '_ot_';
+
+	$attached_posts = new_cmb2_box( array(
+		'id'           => $prefix . 'attached_posts_field',
+		'title'        => __( 'Attached Articles', 'cmb2' ),
+		'object_types' => array( 'reading' ),
+		'context'      => 'normal',
+		'priority'     => 'high',
+		'show_names'   => false,
+	) );
+	$attached_posts->add_field( array(
+		'name'    => __( 'Attached Posts', 'cmb2' ),
+		'desc'    => __( 'Drag articles from the left column to the right column to attach them to this issue.<br />You may rearrange the order of the articles in the right column by dragging and dropping.', 'cmb2' ),
+		'id'      => $prefix . 'attached_articles',
+		'type'    => 'custom_attached_posts',
+		'options' => array(
+			'show_thumbnails' => true, // Show thumbnails on the left
+			'filter_boxes'    => true, // Show a text box for filtering the results
+			'query_args' 	  => array(
+				'author' => -9, 
+				'order' => 'DESC',
+				'orderby' => 'date',
+				'posts_per_page' => -1, 
+				'post_type' => array( 
+					'article', 
+				) 
+			), // override the get_posts args
+		)
+	) );
+}
+
 add_action( 'cmb2_init', 'ot_featured_work_take_overs_metabox' );
 function ot_featured_work_take_overs_metabox() {
 	$prefix = '_ot_';
@@ -229,46 +298,5 @@ function ot_featured_work_take_overs_metabox() {
 		'desc' 		 => __( 'Enter the date the Take Over ended.', 'opening_times' ),
 		'id'   		 => $prefix . 'take_over_end_date',
 		'type' 		 => 'text_date_timestamp',
-	) );
-}
-
-/**
- * Attached Posts field for CMB2.
- *
- * Define the metabox and field configurations.
- *
- * @param  array $meta_boxes
- * @return array
- */
-add_action( 'cmb2_init', 'ot_attached_posts_field_metaboxes' );
-function ot_attached_posts_field_metaboxes() {
-	$prefix = '_ot_';
-
-	$attached_posts = new_cmb2_box( array(
-		'id'           => $prefix . 'attached_posts_field',
-		'title'        => __( 'Attached Articles', 'cmb2' ),
-		'object_types' => array( 'reading' ),
-		'context'      => 'normal',
-		'priority'     => 'high',
-		'show_names'   => false,
-	) );
-	$attached_posts->add_field( array(
-		'name'    => __( 'Attached Posts', 'cmb2' ),
-		'desc'    => __( 'Drag articles from the left column to the right column to attach them to this issue.<br />You may rearrange the order of the articles in the right column by dragging and dropping.', 'cmb2' ),
-		'id'      => $prefix . 'attached_articles',
-		'type'    => 'custom_attached_posts',
-		'options' => array(
-			'show_thumbnails' => true, // Show thumbnails on the left
-			'filter_boxes'    => true, // Show a text box for filtering the results
-			'query_args' 	  => array(
-				'author' => -9, 
-				'order' => 'DESC',
-				'orderby' => 'date',
-				'posts_per_page' => -1, 
-				'post_type' => array( 
-					'article', 
-				) 
-			), // override the get_posts args
-		)
 	) );
 }
