@@ -105,22 +105,11 @@ add_filter ( 'manage_edit-page_columns', 'rkv_remove_columns' );
 add_filter( 'black_studio_tinymce_before_text', '__return_empty_string' );
 add_filter( 'black_studio_tinymce_after_text', '__return_empty_string' );
 
-/*
+/**
  * Clean up formatting in shortcodes
+ *
+ * @link http://stackoverflow.com/questions/5940854/disable-automatic-formatting-inside-wordpress-shortcodes
  */
-/*
-function opening_times_clean_shortcodes($content) {   
-	$array = array (
-		'<p>[' => '[', 
-		']</p>' => ']', 
-		']<br />' => ']'
-	);
-
-	$content = strtr($content, $array);
-	return $content;
-}
-add_filter('the_content', 'opening_times_clean_shortcodes');
-*/
 remove_filter( 'the_content', 'wpautop' );
 add_filter( 'the_content', 'wpautop' , 99);
-add_filter( 'the_content', 'shortcode_unautop',100 ); 
+add_filter( 'the_content', 'shortcode_unautop',100 );
