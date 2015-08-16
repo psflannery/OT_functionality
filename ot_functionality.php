@@ -48,7 +48,7 @@ include_once( OT_DIR . '/inc/cmb2-metaboxes.php' );
 include_once( OT_DIR . '/inc/cmb2-attached-posts-field.php' );
 /* NEW */
 include_once( OT_DIR . '/inc/customizer_backstretch.php' );
-include_once( OT_DIR . '/inc/ot_contact_form.php' );
+include_once( OT_DIR . '/inc/ot_contact_form_widget.php' );
 include_once( OT_DIR . '/inc/extras.php' );
 /* Under Development */
 //include_once( OT_DIR . '/inc/slideshow.php' );

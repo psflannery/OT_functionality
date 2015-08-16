@@ -42,6 +42,7 @@ function be_core_functionality_hidden( $r, $url ) {
 add_filter( 'http_request_args', 'be_core_functionality_hidden', 5, 2 );
 
 /* Use shortcodes in widgets */
+add_filter( 'widget_text', 'shortcode_unautop');  
 add_filter( 'widget_text', 'do_shortcode' );
 
 /**
@@ -96,9 +97,18 @@ function rkv_remove_columns( $columns ) {
 add_filter ( 'manage_edit-post_columns', 'rkv_remove_columns' );
 add_filter ( 'manage_edit-page_columns', 'rkv_remove_columns' );
 
+/**
+ * Totally remove additional markup for Black Studio TinyMCE Widget
+ *
+ * @link https://wordpress.org/plugins/black-studio-tinymce-widget/faq/
+ */
+add_filter( 'black_studio_tinymce_before_text', '__return_empty_string' );
+add_filter( 'black_studio_tinymce_after_text', '__return_empty_string' );
+
 /*
  * Clean up formatting in shortcodes
  */
+/*
 function opening_times_clean_shortcodes($content) {   
 	$array = array (
 		'<p>[' => '[', 
@@ -110,3 +120,7 @@ function opening_times_clean_shortcodes($content) {
 	return $content;
 }
 add_filter('the_content', 'opening_times_clean_shortcodes');
+*/
+remove_filter( 'the_content', 'wpautop' );
+add_filter( 'the_content', 'wpautop' , 99);
+add_filter( 'the_content', 'shortcode_unautop',100 ); 

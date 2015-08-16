@@ -30,12 +30,12 @@ class Opening_Times_Mailing_List extends WP_Widget {
             'ot_mailing_list', 
 
             // Widget name will appear in UI
-            __('phpList Mailing List Widget', 'opening_times'), 
+            __('phpList Mailing List', 'opening_times'), 
 
             // Widget description
             array(
                 'classname'   => 'ot_mailling_list_widget',
-                'description' => __( 'A simple widget to create a phpList mailing list sign up form.', 'opening_times' )
+                'description' => __( 'A phpList mailing list sign up form.', 'opening_times' )
             )
         );
     }
@@ -59,17 +59,21 @@ class Opening_Times_Mailing_List extends WP_Widget {
 
         $title = apply_filters( 'widget_title', $instance['title'] );
 
+        /*
         if ( $title ) {
             echo $before_title . $title . $after_title;
         }
+        */
         
         if ( '' != $instance['subscribe'] ) {
-            $output = '<form class="form-horizontal row" method="post" action="' . esc_attr( $instance['subscribe'] ) . '" name="subscribeform"';
+            $output = '<form class="form-horizontal row" method="post" action="' . esc_attr( $instance['subscribe'] ) . '" name="subscribeform">';
             $output .= '<fieldset>';
-            $output .= '<div class="form-group">
-                            <legend class="col-sm-3 control-label">' . esc_html__( 'Subscribe to our mailing list', 'opening_times' ) . '</legend>
-                        </div>
-                        <div class="form-group">
+            if ( $title ) {
+                $output .= '<div class="form-group">
+                                <legend class="col-sm-3 control-label">' . $before_title . $title . $after_title . '</legend>
+                            </div>';
+            }
+            $output .=  '<div class="form-group">
                             <label class="col-sm-3 control-label" id="ot-mail" for="email">' . esc_html__( 'Email Address', 'opening_times' ) . '</label>
                             <div class="col-sm-4">
                                 <input id="field-ot-mail" class="form-control" name="email" type="email" value="" maxlength="255" required="required" tabindex="1">
@@ -156,7 +160,7 @@ class Opening_Times_Mailing_List extends WP_Widget {
         $unsubscribe = esc_url( $instance['unsubscribe'], null, 'display' );
         $listID      = absint( $instance['listID'] );
 
-        echo '<p><label for="' . $this->get_field_id( 'title' ) . '">' . esc_html__( 'Widget title:', 'opening_times' ) . '</label>
+        echo '<p><label for="' . $this->get_field_id( 'title' ) . '">' . esc_html__( 'Title:', 'opening_times' ) . '</label>
             <input class="widefat" id="' . $this->get_field_id( 'title' ) . '" name="' . $this->get_field_name( 'title' ) . '" type="text" value="' . $title . '" />
             </p>
             <p><label for="' . $this->get_field_id( 'subscribe' ) . '">' . esc_html__( 'Subscribe Link:', 'opening_times' ) . '</label>
