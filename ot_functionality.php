@@ -18,6 +18,7 @@
  * Text Domain:	opening_times
  * License: 	GPL-2.0+
  * GitHub Plugin URI: https://github.com/psflannery/OT_functionality
+ * GitHub Branch: master
  *
  * Copyright 2011 Paul Flannery <psflannery@gmail.com>
  *
