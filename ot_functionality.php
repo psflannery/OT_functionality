@@ -17,6 +17,7 @@
  * Author URI:	http://paulflannery.co.uk
  * Text Domain:	opening_times
  * License: 	GPL-2.0+
+ * GitHub Plugin URI: https://github.com/psflannery/OT_functionality
  *
  * Copyright 2011 Paul Flannery <psflannery@gmail.com>
  *
@@ -46,8 +47,8 @@ include_once( OT_DIR . '/inc/housekeeping.php' );
 include_once( OT_DIR . '/inc/editor-style-refresh.php' );
 include_once( OT_DIR . '/inc/cmb2-metaboxes.php' );
 include_once( OT_DIR . '/inc/cmb2-attached-posts-field.php' );
-include_once( OT_DIR . '/inc/cmb2-shortcode-button.php' );
-include_once( OT_DIR . '/inc/cmb2-shortcode-button-config.php' );
+//include_once( OT_DIR . '/inc/cmb2-shortcode-button.php' );
+//include_once( OT_DIR . '/inc/cmb2-shortcode-button-config.php' );
 /* NEW */
 include_once( OT_DIR . '/inc/customizer_backstretch.php' );
 include_once( OT_DIR . '/inc/ot_contact_form_widget.php' );
