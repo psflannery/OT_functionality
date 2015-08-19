@@ -180,34 +180,6 @@ function ot_editorial_intro_metabox() {
 	) );
 }
 
-add_action( 'cmb2_init', 'ot_editor_bio_metabox' );
-function ot_editor_bio_metabox() {
-	$prefix = '_ot_';
-
-	$editor_bio = new_cmb2_box( array(
-		'id'            => $prefix . 'editor_bio',
-		'title'         => __( 'Editor Bio', 'opening_times' ),
-		'object_types'  => array( 'reading', ),
-		'context'   	=> 'normal',
-		'priority'   	=> 'high',
-		'show_names' 	=> true,
-	) );
-	$editor_bio->add_field( array(
-		'name'       => __( 'Bio', 'opening_times' ),
-		'desc'       => __( 'Enter a short bio for the editor.', 'opening_times' ),
-		'id'         => $prefix . 'editor_bio',
-		'type'       => 'textarea',
-	) );
-	$editor_bio->add_field( array(
-		'name' => __( 'Link', 'cmb2' ),
-		'desc' => __( 'Enter a link, or links for the editor. One per row.', 'cmb2' ),
-		'id'   => $prefix . 'editor_link',
-		'type' => 'text_url',
-		'protocols'  => array('http', 'https', 'ftp', 'ftps', 'mailto', 'news', 'irc', 'gopher', 'nntp', 'feed', 'telnet'), // Array of allowed protocols
-		'repeatable' => true,
-	) );
-}
-
 /**
  * Attached Posts field for CMB2.
  *
