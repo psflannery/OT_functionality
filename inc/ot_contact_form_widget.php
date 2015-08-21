@@ -116,7 +116,7 @@ class Opening_Times_Mailing_List extends WP_Widget {
             $output .= '</fieldset>';
             $output .= '</form>';
             
-            echo '<div class="mailing-list-inner col-sm-8 col-lg-6 col-sm-offset-1 col-lg-offset-2">' . $output . '</div>';
+            echo '<div class="col-sm-8 col-lg-6 col-sm-offset-1 col-lg-offset-2">' . $output . '</div>';
         }
         echo "\n" . $after_widget;     
 	}
