@@ -104,7 +104,7 @@ add_filter( 'black_studio_tinymce_after_text', '__return_empty_string' );
 /**
  * Use shortcodes in widgets 
  */
-add_filter( 'widget_text', 'shortcode_unautop');  
+add_filter( 'widget_text', 'shortcode_unautop' );
 add_filter( 'widget_text', 'do_shortcode' );
 
 /**
@@ -122,6 +122,7 @@ function seventeen_clean_shortcodes($content) {
 	return $content;
 }
 add_filter('the_content', 'seventeen_clean_shortcodes');
+
 //remove_filter( 'the_content', 'wpautop' );
 //add_filter( 'the_content', 'wpautop' , 99);
 //add_filter( 'the_content', 'shortcode_unautop',100 );
