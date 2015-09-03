@@ -18,15 +18,14 @@ $button_slug = 'div';
 // Set up the button data that will be passed to the javascript files
 $js_button_data = array(
     // Actual quicktag button text (on the text edit tab)
-    'qt_button_text' => __( 'Shortcode Button', 'shortcode-button' ),
+    'qt_button_text' => __( 'Block Width', 'shortcode-button' ),
     // Tinymce button hover tooltip (on the html edit tab)
-    'button_tooltip' => __( 'Shortcode Button', 'shortcode-button' ),
-    // Tinymce button icon. Use a dashicon class or a 20x20 image url
-    'icon'           => 'dashicons-admin-appearance',
+    'button_tooltip' => __( 'Block Width', 'shortcode-button' ),
+    'icon'           => 'dashicons-layout',
 
     // Optional parameters
-    'author'         => 'Justin Sternberg',
-    'authorurl'      => 'http://dsgnwrks.pro',
+    'author'         => 'Paul Flannery',
+    'authorurl'      => 'http://paulflannery.co.uk',
     'infourl'        => 'https://github.com/jtsternberg/Shortcode_Button',
     'version'        => '1.0.0',
 
@@ -58,12 +57,19 @@ function shortcode_button_cmb_config( $button_data ) {
         'fields' => array(
             array(
                 'name'    => __( 'Div Shortcode', 'shortcode-button' ),
-                'desc'    => __( 'Set a class for the div', 'shortcode-button' ),
-                'default' => __( 'col-sm-5', 'shortcode-button' ),
+                'desc'    => __( 'Choose a width for the block element. Widths are based on a 12 column grid.', 'shortcode-button' ),
+                'default' => __( 'col-sm-6', 'shortcode-button' ),
                 'id'      => 'class',
-                'type'    => 'text_medium',
+                'type'    => 'select',
+                'options' => array(
+                    'col-sm-12' => __( 'Full width', 'shortcode-button' ),
+                    'col-sm-9'  => __( '3/4 width', 'shortcode-button' ),
+                    'col-sm-8'  => __( '2/3 width', 'shortcode-button' ),
+                    'col-sm-6'  => __( '1/2 width', 'shortcode-button' ),
+                    'col-sm-4'  => __( '1/3 width', 'shortcode-button' ),
+                    'col-sm-3'  => __( '1/4 width', 'shortcode-button' ),
+                ),
             ),
         ),
     );
-
 }

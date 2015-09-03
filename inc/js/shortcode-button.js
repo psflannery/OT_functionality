@@ -52,7 +52,7 @@ window.wp_sc_buttons.visualmode = window.wp_sc_buttons.visualmode || {};
 		};
 
 		tinymce.create( 'tinymce.plugins.'+ button.slug.toUpperCase() +'_Button', {
-
+			
 			init : function( editor ) {
 				editor.addButton( button.slug, buttonArgs() );
 
