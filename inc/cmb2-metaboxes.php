@@ -65,6 +65,19 @@ function opening_times_taxonomy_show_on_filter( $display, $meta_box ) {
     return $display;
 }
 
+/**
+ * Localise any date picker form in CMB2.
+ * See http://api.jqueryui.com/datepicker/ for more info.
+ * Refer to the CMB Field Types Wiki entry
+ * if you wish to implement a different date format
+ * per meta field using date_format.
+ */
+add_filter( 'cmb2_localized_data', 'ot_cmb_set_date_format' );
+function ot_cmb_set_date_format( $l10n ) {
+	$l10n['defaults']['date_picker']['dateFormat'] = 'dd-mm-yy';
+	return $l10n;
+}
+
 add_action( 'cmb2_init', 'ot_featured_work_metabox' );
 function ot_featured_work_metabox() {
 	// Start with an underscore to hide fields from custom fields list
@@ -265,11 +278,13 @@ function ot_featured_work_take_overs_metabox() {
 		'desc'       => __( 'Enter the date the Take Over began.', 'opening_times' ),
 		'id'         => $prefix . 'take_over_start_date',
 		'type'       => 'text_date_timestamp',
+		'date_format' => __( 'd-m-Y', 'cmb2' ),
 	) );
 	$featured_work_take_overs->add_field( array(
 		'name'       => __( 'End Date', 'opening_times' ),
 		'desc'       => __( 'Enter the date the Take Over ended.', 'opening_times' ),
 		'id'         => $prefix . 'take_over_end_date',
 		'type'       => 'text_date_timestamp',
+		'date_format' => __( 'd-m-Y', 'cmb2' ),
 	) );
 }
