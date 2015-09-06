@@ -109,7 +109,6 @@ function basic_backstretch_customizer_register( $wp_customize ) {
 		'type'     => 'checkbox'
 	) );
 }
-
 add_action( 'customize_register', 'basic_backstretch_customizer_register' );
 
 /**

@@ -190,6 +190,7 @@ function ot_editorial_intro_metabox() {
  */
 add_action( 'cmb2_init', 'ot_attached_posts_field_metaboxes' );
 function ot_attached_posts_field_metaboxes() {
+	$user_id = get_theme_mod( 'ot_bv_user_selected_links_author' );
 	$prefix = '_ot_';
 
 	$attached_posts = new_cmb2_box( array(
@@ -208,8 +209,8 @@ function ot_attached_posts_field_metaboxes() {
 		'options' => array(
 			'show_thumbnails' => true, // Show thumbnails on the left
 			'filter_boxes'    => true, // Show a text box for filtering the results
-			'query_args' 	  => array(
-				'author' => -9, 
+			'query_args'      => array(
+				'author' => -$user_id, 
 				'order' => 'DESC',
 				'orderby' => 'date',
 				'posts_per_page' => -1, 
@@ -229,15 +230,15 @@ function ot_featured_work_take_overs_metabox() {
 		'id'            => $prefix . 'featured_work_take_overs',
 		'title'         => __( 'Featured Work', 'opening_times' ),
 		'object_types'  => array( 'take-overs', ),
-		'context'   	=> 'normal',
-		'priority'   	=> 'high',
-		'show_names' 	=> true,
+		'context'       => 'normal',
+		'priority'      => 'high',
+		'show_names'    => true,
 	) );
 	$featured_work_take_overs->add_field( array(
-		'name' 		 => __( 'Embed URL', 'opening_times' ),
-		'desc' 		 => __( 'Enter the Vimeo, Youtube, Soundcloud, Twitter, Instagram URL. Supports services listed at <a href="http://codex.wordpress.org/Embeds">http://codex.wordpress.org/Embeds</a>', 'opening_times' ),
-		'id'   		 => $prefix . 'embed_url',
-		'type' 		 => 'oembed',
+		'name'       => __( 'Embed URL', 'opening_times' ),
+		'desc'       => __( 'Enter the Vimeo, Youtube, Soundcloud, Twitter, Instagram URL. Supports services listed at <a href="http://codex.wordpress.org/Embeds">http://codex.wordpress.org/Embeds</a>', 'opening_times' ),
+		'id'         => $prefix . 'embed_url',
+		'type'       => 'oembed',
 	) );
 	$featured_work_take_overs->add_field( array(
 		'name'       => __( 'Institution Name', 'opening_times' ),
@@ -246,29 +247,29 @@ function ot_featured_work_take_overs_metabox() {
 		'type'       => 'text',
 	) );
 	$featured_work_take_overs->add_field( array(
-		'name' 		 => __( 'External Link', 'opening_times' ),
-		'desc' 		 => __( 'The link or links to the take over', 'opening_times' ),
-		'id'   		 => $prefix . 'link_url',
-		'type' 		 => 'text_url',
+		'name'       => __( 'External Link', 'opening_times' ),
+		'desc'       => __( 'The link or links to the take over', 'opening_times' ),
+		'id'         => $prefix . 'link_url',
+		'type'       => 'text_url',
 		'protocols'  => array('http', 'https', 'ftp', 'ftps', 'mailto', 'news', 'irc', 'gopher', 'nntp', 'feed', 'telnet'), // Array of allowed protocols
 		'repeatable' => true,
 	) );
 	$featured_work_take_overs->add_field( array(
-		'name'		 => __( 'File', 'opening_times' ),
-		'desc' 		 => __( 'Upload a file containing any additional information relating to the takeover', 'opening_times' ),
-		'id'   		 => $prefix . 'file',
-		'type' 		 => 'file',
+		'name'       => __( 'File', 'opening_times' ),
+		'desc'       => __( 'Upload a file containing any additional information relating to the takeover', 'opening_times' ),
+		'id'         => $prefix . 'file',
+		'type'       => 'file',
 	) );
 	$featured_work_take_overs->add_field( array(
-		'name' 		 => __( 'Start Date', 'opening_times' ),
-		'desc' 		 => __( 'Enter the date the Take Over began.', 'opening_times' ),
-		'id'   		 => $prefix . 'take_over_start_date',
-		'type' 		 => 'text_date_timestamp',
+		'name'       => __( 'Start Date', 'opening_times' ),
+		'desc'       => __( 'Enter the date the Take Over began.', 'opening_times' ),
+		'id'         => $prefix . 'take_over_start_date',
+		'type'       => 'text_date_timestamp',
 	) );
 	$featured_work_take_overs->add_field( array(
-		'name' 		 => __( 'End Date', 'opening_times' ),
-		'desc' 		 => __( 'Enter the date the Take Over ended.', 'opening_times' ),
-		'id'   		 => $prefix . 'take_over_end_date',
-		'type' 		 => 'text_date_timestamp',
+		'name'       => __( 'End Date', 'opening_times' ),
+		'desc'       => __( 'Enter the date the Take Over ended.', 'opening_times' ),
+		'id'         => $prefix . 'take_over_end_date',
+		'type'       => 'text_date_timestamp',
 	) );
 }
