@@ -130,12 +130,14 @@ function ot_residency_dates_metabox() {
 		'desc'		 => __( 'Enter the date the residency starts. Only the month and year will be displayed.', 'opening_times' ),
 		'id'  		 => $prefix . 'residency_start_date',
 		'type' 		 => 'text_date_timestamp',
+		'date_format' => __( 'd-m-Y', 'cmb2' ),
 	) );
 	$residency_dates->add_field( array(
 		'name' 		 => __( 'End Date', 'opening_times' ),
 		'desc'		 => __( 'Enter the date the residency ends. Only the month and year will be displayed.', 'opening_times' ),
 		'id'  		 => $prefix . 'residency_end_date',
 		'type' 		 => 'text_date_timestamp',
+		'date_format' => __( 'd-m-Y', 'cmb2' ),
 	) );
 }
 
