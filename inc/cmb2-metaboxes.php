@@ -78,6 +78,11 @@ function ot_cmb_set_date_format( $l10n ) {
 	return $l10n;
 }
 
+/**
+ * Posts
+ *
+ *---------------------------------------------------------------*/
+
 add_action( 'cmb2_init', 'ot_featured_work_metabox' );
 function ot_featured_work_metabox() {
 	// Start with an underscore to hide fields from custom fields list
@@ -141,6 +146,11 @@ function ot_residency_dates_metabox() {
 	) );
 }
 
+/**
+ * Reading Articles
+ *
+ *---------------------------------------------------------------*/
+
 add_action( 'cmb2_init', 'ot_featured_work_reading_metabox' );
 function ot_featured_work_reading_metabox() {
 	$prefix = '_ot_';
@@ -175,6 +185,11 @@ function ot_featured_work_reading_metabox() {
 	) );
 }
 
+/**
+ * Reading Issues
+ *
+ *---------------------------------------------------------------*/
+
 add_action( 'cmb2_init', 'ot_editorial_intro_metabox' );
 function ot_editorial_intro_metabox() {
 	$prefix = '_ot_';
@@ -205,7 +220,7 @@ function ot_editorial_intro_metabox() {
  */
 add_action( 'cmb2_init', 'ot_attached_posts_field_metaboxes' );
 function ot_attached_posts_field_metaboxes() {
-	$user_id = get_theme_mod( 'ot_bv_user_selected_links_author' );
+	//$user_id = get_theme_mod( 'ot_bv_user_selected_links_author' );
 	$prefix = '_ot_';
 
 	$attached_posts = new_cmb2_box( array(
@@ -225,17 +240,51 @@ function ot_attached_posts_field_metaboxes() {
 			'show_thumbnails' => true, // Show thumbnails on the left
 			'filter_boxes'    => true, // Show a text box for filtering the results
 			'query_args'      => array(
-				'author' => -$user_id, 
+				//'author' => -$user_id, 
 				'order' => 'DESC',
 				'orderby' => 'date',
 				'posts_per_page' => -1, 
 				'post_type' => array( 
 					'article', 
-				) 
+				),
+				'post_status' => array( 
+					'publish',
+				)
 			), // override the get_posts args
 		)
 	) );
 }
+
+add_action( 'cmb2_init', 'ot_after_reading_list_metabox' );
+function ot_after_reading_list_metabox() {
+	$prefix = '_ot_';
+
+	$after_reading_list = new_cmb2_box( array(
+		'id'            => $prefix . 'after_reading_list',
+		'title'         => __( 'After Reading List', 'opening_times' ),
+		'object_types'  => array( 'reading', ),
+		'context'   	=> 'normal',
+		'priority'   	=> 'high',
+		'show_names' 	=> true,
+	) );
+	$after_reading_list->add_field( array(
+		'name' => __( 'Footnote', 'opening_times' ),
+		'desc' => __( 'Add a little footnote or postscript to the list of selected articles.', 'opening_times' ),
+		'id'   => $prefix . 'after_reading_footnote',
+		'type'    => 'wysiwyg',
+		'options' => array( 'textarea_rows' => 10, ),
+	) );
+	$after_reading_list->add_field( array(
+		'name'       => __( 'Submission Form', 'opening_times' ),
+		'desc'       => __( 'Add an article submission form to the end of the list of selected articles.', 'opening_times' ),
+		'id'         => $prefix . 'after_reading_post_submit',
+		'type'       => 'checkbox',
+	) );
+}
+
+/**
+ * Takeovers
+ *---------------------------------------------------------------*/
 
 add_action( 'cmb2_init', 'ot_featured_work_take_overs_metabox' );
 function ot_featured_work_take_overs_metabox() {
