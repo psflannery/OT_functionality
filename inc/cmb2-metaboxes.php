@@ -83,7 +83,7 @@ function ot_cmb_set_date_format( $l10n ) {
  *
  *---------------------------------------------------------------*/
 
-add_action( 'cmb2_init', 'ot_featured_work_metabox' );
+add_action( 'cmb2_admin_init', 'ot_featured_work_metabox' );
 function ot_featured_work_metabox() {
 	// Start with an underscore to hide fields from custom fields list
 	$prefix = '_ot_';
@@ -112,7 +112,7 @@ function ot_featured_work_metabox() {
 	) );
 }
 
-add_action( 'cmb2_init', 'ot_residency_dates_metabox' );
+add_action( 'cmb2_admin_init', 'ot_residency_dates_metabox' );
 function ot_residency_dates_metabox() {
 	$prefix = '_ot_';
 
@@ -151,7 +151,7 @@ function ot_residency_dates_metabox() {
  *
  *---------------------------------------------------------------*/
 
-add_action( 'cmb2_init', 'ot_featured_work_reading_metabox' );
+add_action( 'cmb2_admin_init', 'ot_featured_work_reading_metabox' );
 function ot_featured_work_reading_metabox() {
 	$prefix = '_ot_';
 
@@ -190,7 +190,7 @@ function ot_featured_work_reading_metabox() {
  *
  *---------------------------------------------------------------*/
 
-add_action( 'cmb2_init', 'ot_editorial_intro_metabox' );
+add_action( 'cmb2_admin_init', 'ot_editorial_intro_metabox' );
 function ot_editorial_intro_metabox() {
 	$prefix = '_ot_';
 
@@ -218,7 +218,7 @@ function ot_editorial_intro_metabox() {
  * @param  array $meta_boxes
  * @return array
  */
-add_action( 'cmb2_init', 'ot_attached_posts_field_metaboxes' );
+add_action( 'cmb2_admin_init', 'ot_attached_posts_field_metaboxes' );
 function ot_attached_posts_field_metaboxes() {
 	//$user_id = get_theme_mod( 'ot_bv_user_selected_links_author' );
 	$prefix = '_ot_';
@@ -255,7 +255,7 @@ function ot_attached_posts_field_metaboxes() {
 	) );
 }
 
-add_action( 'cmb2_init', 'ot_after_reading_list_metabox' );
+add_action( 'cmb2_admin_init', 'ot_after_reading_list_metabox' );
 function ot_after_reading_list_metabox() {
 	$prefix = '_ot_';
 
@@ -286,7 +286,7 @@ function ot_after_reading_list_metabox() {
  * Takeovers
  *---------------------------------------------------------------*/
 
-add_action( 'cmb2_init', 'ot_featured_work_take_overs_metabox' );
+add_action( 'cmb2_admin_init', 'ot_featured_work_take_overs_metabox' );
 function ot_featured_work_take_overs_metabox() {
 	$prefix = '_ot_';
 
