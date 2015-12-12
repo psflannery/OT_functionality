@@ -315,6 +315,10 @@ function ot_featured_work_projects_metabox() {
 		'desc'		 => __( 'Set the height of the iframe in px', 'opening_times'),
 		'id'         => $prefix . 'iframe_height',
 		'type'		 => 'text',
+		'attributes' => array(
+			'required' => true, // Will be required only if visible.
+			'data-conditional-id' => $prefix . 'iframe_url',
+		)
 	) );
 	$featured_work_projects->add_field( array(
 		'name'       => __( 'Institution Name', 'opening_times' ),
