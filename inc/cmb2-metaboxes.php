@@ -283,7 +283,7 @@ function ot_after_reading_list_metabox() {
 }
 
 /**
- * Takeovers
+ * Projects
  *---------------------------------------------------------------*/
 
 add_action( 'cmb2_admin_init', 'ot_featured_work_take_overs_metabox' );
@@ -293,7 +293,7 @@ function ot_featured_work_take_overs_metabox() {
 	$featured_work_take_overs = new_cmb2_box( array(
 		'id'            => $prefix . 'featured_work_take_overs',
 		'title'         => __( 'Featured Work', 'opening_times' ),
-		'object_types'  => array( 'take-overs', ),
+		'object_types'  => array( 'projects', ),
 		'context'       => 'normal',
 		'priority'      => 'high',
 		'show_names'    => true,
