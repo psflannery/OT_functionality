@@ -112,7 +112,7 @@ add_filter( 'widget_text', 'do_shortcode' );
  *
  * @link http://stackoverflow.com/questions/5940854/disable-automatic-formatting-inside-wordpress-shortcodes
  */
-function seventeen_clean_shortcodes($content) {   
+function opening_times_clean_shortcodes($content) {   
 	$array = array (
 		'<p>[' => '[', 
 		']</p>' => ']', 
@@ -121,8 +121,8 @@ function seventeen_clean_shortcodes($content) {
 	$content = strtr($content, $array);
 	return $content;
 }
-add_filter('the_content', 'seventeen_clean_shortcodes');
+add_filter('the_content', 'opening_times_clean_shortcodes');
 
 //remove_filter( 'the_content', 'wpautop' );
 //add_filter( 'the_content', 'wpautop' , 99);
-//add_filter( 'the_content', 'shortcode_unautop',100 );
+add_filter( 'the_content', 'shortcode_unautop',100 );
