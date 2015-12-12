@@ -305,6 +305,18 @@ function ot_featured_work_projects_metabox() {
 		'type'       => 'oembed',
 	) );
 	$featured_work_projects->add_field( array(
+		'name'       => __( 'Iframe URL', 'opening_times' ),
+		'desc'		 => __( 'Enter the URL for the iframe', 'opening_times'),
+		'id'         => $prefix . 'iframe_url',
+		'type'		 => 'text',
+	) );
+	$featured_work_projects->add_field( array(
+		'name'       => __( 'Iframe Height', 'opening_times' ),
+		'desc'		 => __( 'Set the height of the iframe in px', 'opening_times'),
+		'id'         => $prefix . 'iframe_height',
+		'type'		 => 'text',
+	) );
+	$featured_work_projects->add_field( array(
 		'name'       => __( 'Institution Name', 'opening_times' ),
 		'desc'       => __( 'The name of the institution where the project was held. Will display on the left of the accordion header.', 'opening_times' ),
 		'id'         => $prefix . 'institution_name',
