@@ -283,58 +283,74 @@ function ot_after_reading_list_metabox() {
 }
 
 /**
- * Takeovers
+ * Projects
  *---------------------------------------------------------------*/
 
-add_action( 'cmb2_admin_init', 'ot_featured_work_take_overs_metabox' );
-function ot_featured_work_take_overs_metabox() {
+add_action( 'cmb2_admin_init', 'ot_featured_work_projects_metabox' );
+function ot_featured_work_projects_metabox() {
 	$prefix = '_ot_';
 
-	$featured_work_take_overs = new_cmb2_box( array(
-		'id'            => $prefix . 'featured_work_take_overs',
+	$featured_work_projects = new_cmb2_box( array(
+		'id'            => $prefix . 'featured_work_projects',
 		'title'         => __( 'Featured Work', 'opening_times' ),
-		'object_types'  => array( 'take-overs', ),
+		'object_types'  => array( 'projects', ),
 		'context'       => 'normal',
 		'priority'      => 'high',
 		'show_names'    => true,
 	) );
-	$featured_work_take_overs->add_field( array(
+	$featured_work_projects->add_field( array(
 		'name'       => __( 'Embed URL', 'opening_times' ),
 		'desc'       => __( 'Enter the Vimeo, Youtube, Soundcloud, Twitter, Instagram URL. Supports services listed at <a href="http://codex.wordpress.org/Embeds">http://codex.wordpress.org/Embeds</a>', 'opening_times' ),
 		'id'         => $prefix . 'embed_url',
 		'type'       => 'oembed',
 	) );
-	$featured_work_take_overs->add_field( array(
+	$featured_work_projects->add_field( array(
+		'name'       => __( 'Iframe URL', 'opening_times' ),
+		'desc'		 => __( 'Enter the URL for the iframe', 'opening_times'),
+		'id'         => $prefix . 'iframe_url',
+		'type'		 => 'text',
+	) );
+	$featured_work_projects->add_field( array(
+		'name'       => __( 'Iframe Height', 'opening_times' ),
+		'desc'		 => __( 'Set the height of the iframe in px', 'opening_times'),
+		'id'         => $prefix . 'iframe_height',
+		'type'		 => 'text',
+		'attributes' => array(
+			'required' => true, // Will be required only if visible.
+			'data-conditional-id' => $prefix . 'iframe_url',
+		)
+	) );
+	$featured_work_projects->add_field( array(
 		'name'       => __( 'Institution Name', 'opening_times' ),
-		'desc'       => __( 'The name of the institution being taken over. Will display on the left of the accordion header.', 'opening_times' ),
+		'desc'       => __( 'The name of the institution where the project was held. Will display on the left of the accordion header.', 'opening_times' ),
 		'id'         => $prefix . 'institution_name',
 		'type'       => 'text',
 	) );
-	$featured_work_take_overs->add_field( array(
+	$featured_work_projects->add_field( array(
 		'name'       => __( 'External Link', 'opening_times' ),
-		'desc'       => __( 'The link or links to the take over', 'opening_times' ),
+		'desc'       => __( 'The link or links to the project', 'opening_times' ),
 		'id'         => $prefix . 'link_url',
 		'type'       => 'text_url',
 		'protocols'  => array('http', 'https', 'ftp', 'ftps', 'mailto', 'news', 'irc', 'gopher', 'nntp', 'feed', 'telnet'), // Array of allowed protocols
 		'repeatable' => true,
 	) );
-	$featured_work_take_overs->add_field( array(
+	$featured_work_projects->add_field( array(
 		'name'       => __( 'File', 'opening_times' ),
-		'desc'       => __( 'Upload a file containing any additional information relating to the takeover', 'opening_times' ),
+		'desc'       => __( 'Upload a file containing any additional information relating to the project', 'opening_times' ),
 		'id'         => $prefix . 'file',
 		'type'       => 'file',
 	) );
-	$featured_work_take_overs->add_field( array(
+	$featured_work_projects->add_field( array(
 		'name'       => __( 'Start Date', 'opening_times' ),
-		'desc'       => __( 'Enter the date the Take Over began.', 'opening_times' ),
-		'id'         => $prefix . 'take_over_start_date',
+		'desc'       => __( 'Enter the date the Project began.', 'opening_times' ),
+		'id'         => $prefix . 'project_start_date',
 		'type'       => 'text_date_timestamp',
 		'date_format' => __( 'd-m-Y', 'cmb2' ),
 	) );
-	$featured_work_take_overs->add_field( array(
+	$featured_work_projects->add_field( array(
 		'name'       => __( 'End Date', 'opening_times' ),
-		'desc'       => __( 'Enter the date the Take Over ended.', 'opening_times' ),
-		'id'         => $prefix . 'take_over_end_date',
+		'desc'       => __( 'Enter the date the Project ended.', 'opening_times' ),
+		'id'         => $prefix . 'project_end_date',
 		'type'       => 'text_date_timestamp',
 		'date_format' => __( 'd-m-Y', 'cmb2' ),
 	) );
