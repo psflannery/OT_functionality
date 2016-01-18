@@ -35,7 +35,8 @@ function register_taxonomy_artists() {
 		'show_tagcloud' => true,
 		'show_admin_column' => true,
 		'hierarchical' => false,
-
+		'show_in_rest' => true,
+		'rest_base' => 'artists',
 		'rewrite' => true,
 		'query_var' => true
 	);
@@ -73,7 +74,8 @@ function register_taxonomy_authors() {
 		'show_tagcloud' => true,
 		'show_admin_column' => true,
 		'hierarchical' => false,
-
+		'show_in_rest' => true,
+		'rest_base' => 'authors',
 		'rewrite' => true,
 		'query_var' => true
 	);
