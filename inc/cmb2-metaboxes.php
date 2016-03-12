@@ -196,19 +196,62 @@ function ot_editorial_intro_metabox() {
 
 	$editorial_intro = new_cmb2_box( array(
 		'id'            => $prefix . 'editorial_intro',
-		'title'         => __( 'Editorial Title', 'opening_times' ),
+		//'title'         => __( 'Editorial Title', 'opening_times' ), // omit the 'title' field to keep the normal wp metabox from displaying
 		'object_types'  => array( 'reading', ),
-		'context'   	=> 'side',
 		'priority'   	=> 'high',
-		'show_names' 	=> true,
+		//'show_names' 	=> true,
 	) );
 	$editorial_intro->add_field( array(
-		'name'       => __( 'Title', 'opening_times' ),
-		'desc'       => __( 'Enter the Title of the Editorial Introduction', 'opening_times' ),
+		//'name'       => __( 'Title', 'opening_times' ),
+		'desc'       => __( 'Title of the Editorial Introduction', 'opening_times' ),
 		'id'         => $prefix . 'editor_title',
 		'type'       => 'text',
+		/*
+		'attributes'  => array(
+        	'placeholder' => 'A small amount of text',
+    	),
+    	*/
 	) );
 }
+
+/**
+ * Position the Editor Title Metabox below the Post Title
+ *
+ * @param  array $meta_boxes
+ * @return array
+ */
+add_action( 'edit_form_after_title', 'ot_output_editor_title_location' );
+function ot_output_editor_title_location() {
+	$screen = get_current_screen();
+	if($screen->post_type == 'reading'){
+		cmb2_get_metabox( '_ot_editorial_intro' )->show_form();
+	}
+}
+
+/**
+ * Add some custom styles so that the repoistioned metabox matches WP core
+ */
+function ot_editor_subtitle_style() {
+	$screen = get_current_screen();
+	if($screen->post_type == 'reading'){
+    echo '<style type="text/css">
+           	.cmb2-id--ot-editor-title .cmb-td {
+				padding: 15px 0;
+			}
+			.cmb2-id--ot-editor-title .regular-text {
+    			padding: 3px 8px;
+    			font-size: 1.7em;
+    			line-height: 100%;
+    			height: 1.7em;
+    			width: 100%;
+    			outline: 0;
+    			margin: 0 0 3px;
+    			background-color: #fff;
+			}
+         </style>';
+    }
+}
+add_action('admin_head', 'ot_editor_subtitle_style');
 
 /**
  * Attached Posts field for CMB2.
@@ -266,6 +309,7 @@ function ot_after_reading_list_metabox() {
 		'context'   	=> 'normal',
 		'priority'   	=> 'high',
 		'show_names' 	=> true,
+		'closed'        => true,
 	) );
 	$after_reading_list->add_field( array(
 		'name' => __( 'Footnote', 'opening_times' ),
@@ -285,6 +329,48 @@ function ot_after_reading_list_metabox() {
 /**
  * Projects
  *---------------------------------------------------------------*/
+
+add_action( 'cmb2_admin_init', 'ot_projects_details_metabox' );
+function ot_projects_details_metabox() {
+	$prefix = '_ot_';
+
+	$project_details = new_cmb2_box( array(
+		'id'            => $prefix . 'project_details',
+		'title'         => __( 'Project Details', 'opening_times' ),
+		'object_types'  => array( 'projects', ),
+		'context'       => 'normal',
+		'priority'      => 'high',
+		'show_names'    => true,
+	) );
+	$project_details->add_field( array(
+		'name'       => __( 'Institution Name', 'opening_times' ),
+		'desc'       => __( 'The name of the institution where the project was held. Will display on the left of the accordion header.', 'opening_times' ),
+		'id'         => $prefix . 'institution_name',
+		'type'       => 'text',
+	) );
+	$project_details->add_field( array(
+		'name'       => __( 'External Link', 'opening_times' ),
+		'desc'       => __( 'The link or links to the project', 'opening_times' ),
+		'id'         => $prefix . 'link_url',
+		'type'       => 'text_url',
+		'protocols'  => array('http', 'https', 'ftp', 'ftps', 'mailto', 'news', 'irc', 'gopher', 'nntp', 'feed', 'telnet'), // Array of allowed protocols
+		'repeatable' => true,
+	) );
+	$project_details->add_field( array(
+		'name'       => __( 'Start Date', 'opening_times' ),
+		'desc'       => __( 'Enter the date the Project began.', 'opening_times' ),
+		'id'         => $prefix . 'project_start_date',
+		'type'       => 'text_date_timestamp',
+		'date_format' => __( 'd-m-Y', 'cmb2' ),
+	) );
+	$project_details->add_field( array(
+		'name'       => __( 'End Date', 'opening_times' ),
+		'desc'       => __( 'Enter the date the Project ended.', 'opening_times' ),
+		'id'         => $prefix . 'project_end_date',
+		'type'       => 'text_date_timestamp',
+		'date_format' => __( 'd-m-Y', 'cmb2' ),
+	) );
+}
 
 add_action( 'cmb2_admin_init', 'ot_featured_work_projects_metabox' );
 function ot_featured_work_projects_metabox() {
@@ -321,37 +407,9 @@ function ot_featured_work_projects_metabox() {
 		)
 	) );
 	$featured_work_projects->add_field( array(
-		'name'       => __( 'Institution Name', 'opening_times' ),
-		'desc'       => __( 'The name of the institution where the project was held. Will display on the left of the accordion header.', 'opening_times' ),
-		'id'         => $prefix . 'institution_name',
-		'type'       => 'text',
-	) );
-	$featured_work_projects->add_field( array(
-		'name'       => __( 'External Link', 'opening_times' ),
-		'desc'       => __( 'The link or links to the project', 'opening_times' ),
-		'id'         => $prefix . 'link_url',
-		'type'       => 'text_url',
-		'protocols'  => array('http', 'https', 'ftp', 'ftps', 'mailto', 'news', 'irc', 'gopher', 'nntp', 'feed', 'telnet'), // Array of allowed protocols
-		'repeatable' => true,
-	) );
-	$featured_work_projects->add_field( array(
 		'name'       => __( 'File', 'opening_times' ),
 		'desc'       => __( 'Upload a file containing any additional information relating to the project', 'opening_times' ),
 		'id'         => $prefix . 'file',
 		'type'       => 'file',
-	) );
-	$featured_work_projects->add_field( array(
-		'name'       => __( 'Start Date', 'opening_times' ),
-		'desc'       => __( 'Enter the date the Project began.', 'opening_times' ),
-		'id'         => $prefix . 'project_start_date',
-		'type'       => 'text_date_timestamp',
-		'date_format' => __( 'd-m-Y', 'cmb2' ),
-	) );
-	$featured_work_projects->add_field( array(
-		'name'       => __( 'End Date', 'opening_times' ),
-		'desc'       => __( 'Enter the date the Project ended.', 'opening_times' ),
-		'id'         => $prefix . 'project_end_date',
-		'type'       => 'text_date_timestamp',
-		'date_format' => __( 'd-m-Y', 'cmb2' ),
 	) );
 }
