@@ -223,7 +223,7 @@ function ot_editorial_intro_metabox() {
 add_action( 'edit_form_after_title', 'ot_output_editor_title_location' );
 function ot_output_editor_title_location() {
 	$screen = get_current_screen();
-	if($screen->post_type == 'reading'){
+	if($screen->post_type == 'reading') {
 		cmb2_get_metabox( '_ot_editorial_intro' )->show_form();
 	}
 }
