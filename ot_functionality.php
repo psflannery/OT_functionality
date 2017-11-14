@@ -12,7 +12,7 @@
  * Plugin Name:	OT functionality
  * Plugin URI:	http://otdac.org
  * Description:	Core functionality for the Opening Times website. Registers functions that exist independently of the theme - Custom Post Types, Custom Taxonomies and other bits of goodness.
- * Version: 	1.1.7
+ * Version: 	2.0.0
  * Author: 		Paul Flannery
  * Author URI:	http://paulflannery.co.uk
  * Text Domain:	opening_times
@@ -20,7 +20,7 @@
  * GitHub Plugin URI: https://github.com/psflannery/OT_functionality
  * GitHub Branch: master
  *
- * Copyright 2016 Paul Flannery <psflannery@gmail.com>
+ * Copyright 2017 Paul Flannery <psflannery@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License, version 2, as 
@@ -47,7 +47,7 @@ include_once( OT_DIR . '/inc/chat_format.php' );
 include_once( OT_DIR . '/inc/housekeeping.php' );
 include_once( OT_DIR . '/inc/editor-style-refresh.php' );
 include_once( OT_DIR . '/inc/cmb2-metaboxes.php' );
-include_once( OT_DIR . '/inc/cmb2-attached-posts-field.php' );
+include_once( OT_DIR . '/inc/cmb2-fieldtypes.php' );
 include_once( OT_DIR . '/inc/cmb2-shortcode-button.php' );
 include_once( OT_DIR . '/inc/cmb2-shortcode-button-config.php' );
 include_once( OT_DIR . '/inc/customizer_full_screen_background.php');

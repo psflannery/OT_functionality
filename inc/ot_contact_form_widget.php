@@ -41,7 +41,7 @@ class Opening_Times_Mailing_List extends WP_Widget {
     }
 
 	/**
-	 * Outputs the content of the widget
+	 * Outputs the content of the widget on the Front End
 	 *
 	 * @param array $args
 	 * @param array $instance
@@ -66,57 +66,62 @@ class Opening_Times_Mailing_List extends WP_Widget {
         */
         
         if ( '' != $instance['subscribe'] ) {
-            $output = '<form class="form-horizontal row" method="post" action="' . esc_attr( $instance['subscribe'] ) . '" name="subscribeform">';
-            $output .= '<fieldset>';
+            $output = '<form class="row" method="post" action="' . esc_attr( $instance['subscribe'] ) . '" name="subscribeform">';
+            $output .= '<fieldset class="col-lg-12">';
+            
             if ( $title ) {
-                $output .= '<div class="form-group">
-                                <legend class="col-sm-3 control-label">' . $before_title . $title . $after_title . '</legend>
+                $output .= '<div class="form-group row">
+                                <legend class="col-md-4 control-label">' . $before_title . $title . $after_title . '</legend>
                             </div>';
             }
-            $output .=  '<div class="form-group">
-                            <label class="col-sm-3 control-label" id="ot-mail" for="email">' . esc_html__( 'Email Address', 'opening_times' ) . '</label>
-                            <div class="col-sm-4">
+           
+            $output .=  '<div class="form-group row">
+                            <label class="col-md-4 control-label" id="ot-mail" for="email">' . esc_html__( 'Email Address', 'opening_times' ) . '</label>
+                            <div class="col-md-4">
                                 <input id="field-ot-mail" class="form-control" name="email" type="email" value="" maxlength="255" required="required" tabindex="1">
                             </div>
                         </div>	
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label" id="ot-mail-confirm" for="emailconfirm">' . esc_html__( 'Confirm Email', 'opening_times' ) . '</label>
-                            <div class="col-sm-4">
+                        <div class="form-group row">
+                            <label class="col-md-4 control-label" id="ot-mail-confirm" for="emailconfirm">' . esc_html__( 'Confirm Email', 'opening_times' ) . '</label>
+                            <div class="col-md-4">
                                 <input id="field-ot-mail-confirm" class="form-control" name="emailconfirm" type="email" value="" maxlength="255" required="required" tabindex="2">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label" id="ot-first-name" for="first-name">' . esc_html__( 'First Name', 'opening_times' ) . '</label>
-                            <div class="col-sm-4">
+                        <div class="form-group row">
+                            <label class="col-md-4 control-label" id="ot-first-name" for="first-name">' . esc_html__( 'First Name', 'opening_times' ) . '</label>
+                            <div class="col-md-4">
                                 <input id="field-ot-first-name" class="form-control" name="first-name" type="text" class="field text fn" value="" required="required" tabindex="3">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label" id="ot-last-name" for="last-name">' . esc_html__( 'Surname', 'opening_times' ) . '</label>
-                            <div class="col-sm-4">
+                        <div class="form-group row">
+                            <label class="col-md-4 control-label" id="ot-last-name" for="last-name">' . esc_html__( 'Surname', 'opening_times' ) . '</label>
+                            <div class="col-md-4">
                                 <input id="field-ot-last-name" class="form-control" name="last-name" type="text" class="field text fn" value="" tabindex="4">
                             </div>
                         </div>';
+            
             if ( '' != $instance['listID'] ) {
-                $output .= '<div class="form-group">
-                                <div class="col-sm-offset-3 col-sm-7">
+                $output .= '<div class="form-group row">
+                                <div class="offset-md-4 col-md-4">
                                     <input name="list[' . esc_attr( $instance['listID'] ) . ']" value="signup" type="hidden">
                                     <input name="listname[' . esc_attr( $instance['listID'] ) . ']" value="Opening Times General List" type="hidden">
-                                    <input id="ot-subscribe" name="subscribe" type="submit" value="' . esc_html__( 'Subscribe', 'opening_times' ) .'" class="ot-button" onclick="return checkform();" tabindex="5">
+                                    <button class="btn btn-outline-secondary" name="subscribe" type="submit" tabindex="5">' . esc_html__( 'Subscribe', 'opening_times' ) . '</button>
                                 </div>
                             </div>';
             }
+            
             if ( '' != $instance['unsubscribe'] ) {
-                $output .= '<div class="form-group">
-                                <div class="col-sm-offset-3 col-sm-7">
-                                    <a href="' . esc_attr( $instance['unsubscribe'] ) . '" class="ot-mail-unsubscribe">' . esc_html__( 'Unubscribe', 'opening_times' ) . '</a>
+                $output .= '<div class="form-group row">
+                                <div class="offset-md-4 col-md-4">
+                                    <a href="' . esc_attr( $instance['unsubscribe'] ) . '" class="ot-mail-unsubscribe btn-link">' . esc_html__( 'Unubscribe', 'opening_times' ) . '</a>
                                 </div>
                             </div>';
             }
+            
             $output .= '</fieldset>';
             $output .= '</form>';
             
-            echo '<div class="col-sm-8 col-lg-6 col-sm-offset-1 col-lg-offset-2">' . $output . '</div>';
+            echo '<div class="col">' . $output . '</div>';
         }
         echo "\n" . $after_widget;     
 	}
