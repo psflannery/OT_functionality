@@ -66,7 +66,7 @@ class Opening_Times_Mailing_List extends WP_Widget {
         */
         
         if ( '' != $instance['subscribe'] ) {
-            $output = '<form class="row" method="post" action="' . esc_attr( $instance['subscribe'] ) . '" name="subscribeform">';
+            $output = '<form id="mailing-list-subscribe" class="row" method="post" action="' . esc_attr( $instance['subscribe'] ) . '" name="subscribeform">';
             $output .= '<fieldset class="col-lg-12">';
             
             if ( $title ) {
