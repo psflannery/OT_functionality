@@ -66,7 +66,7 @@ class Opening_Times_Mailing_List extends WP_Widget {
         */
         
         if ( '' != $instance['subscribe'] ) {
-            $output = '<form id="mailing-list-subscribe" class="row" method="post" action="' . esc_attr( $instance['subscribe'] ) . '" name="subscribeform">';
+            $output = '<form id="mailing-list-subscribe" class="row" method="post" action="' . esc_attr( $instance['subscribe'] ) . '" name="subscribeform" novalidate>';
             $output .= '<fieldset class="col-lg-12">';
             
             if ( $title ) {
@@ -79,18 +79,21 @@ class Opening_Times_Mailing_List extends WP_Widget {
                             <label class="col-md-4 control-label" id="ot-mail" for="email">' . esc_html__( 'Email Address', 'opening_times' ) . '</label>
                             <div class="col-md-4">
                                 <input id="field-ot-mail" class="form-control" name="email" type="email" value="" maxlength="255" required="required" tabindex="1">
+                                <div class="invalid-feedback">' . esc_html__( 'Please provide a valid email.', 'opening_times' ) . '</div>
                             </div>
                         </div>	
                         <div class="form-group row">
                             <label class="col-md-4 control-label" id="ot-mail-confirm" for="emailconfirm">' . esc_html__( 'Confirm Email', 'opening_times' ) . '</label>
                             <div class="col-md-4">
                                 <input id="field-ot-mail-confirm" class="form-control" name="emailconfirm" type="email" value="" maxlength="255" required="required" tabindex="2">
+                                <div class="invalid-feedback" data-text-swap="' . esc_html__( 'Please provide a valid email.', 'opening_times' ) . '">' . esc_html__( 'Emails do not match.', 'opening_times' ) . '</div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-4 control-label" id="ot-first-name" for="first-name">' . esc_html__( 'First Name', 'opening_times' ) . '</label>
                             <div class="col-md-4">
                                 <input id="field-ot-first-name" class="form-control" name="first-name" type="text" class="field text fn" value="" required="required" tabindex="3">
+                                <div class="invalid-feedback">' . esc_html__( 'Please enter your name.', 'opening_times' ) . '</div>
                             </div>
                         </div>
                         <div class="form-group row">
