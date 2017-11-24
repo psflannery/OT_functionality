@@ -106,25 +106,27 @@ add_shortcode( 'email', 'wpcodex_hide_email_shortcode' );
 
 function opening_times_media_sample_shortcode( $atts, $content = null ) {
     $atts = shortcode_atts( array(
-		'class' => '',
-		'id'    => '',
-        'media' => '',
+		'class'    => '',
+		'id'       => '',
+        'media'    => '',
+        'position' => 'bottom',
 	), $atts, 'sample' );
     
     $return = '<span';
     
     $attributes = array( 'class', 'id' );
+    $data_attributes = array( 'media', 'position' );
     
     foreach ( $attributes as $attribute ) {
         if ( !empty( $atts[$attribute] ) ) {
-            //$return .= ' ' . $attribute . '="'. esc_attr( $atts[$attribute] ) .'"';
             $return .= ' ' . $attribute . '=\''. esc_attr( $atts[$attribute] ) .'\'';
         }
     }
-    
-    if ( !empty( $atts['media'] ) ) {
-        //$return .= ' data-media="'. esc_attr( $atts["media"] ) . '"';
-        $return .= ' data-media=\''. esc_attr( $atts["media"] ) . '\'';
+   
+    foreach ( $data_attributes as $data_attribute ) {
+        if ( ! empty( $atts[$data_attribute] ) ) {
+            $return .= ' data-' . $data_attribute . '="'. esc_html( $atts[$data_attribute] ) .'"';
+        }
     }
     
     $return .= '>' . $content . '</span>';
