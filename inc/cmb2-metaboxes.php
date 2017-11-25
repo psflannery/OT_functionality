@@ -645,7 +645,7 @@ function ot_ad_examples_before_row_cb( $field_args, $field ) {
  * Hooks
  *---------------------------------------------------------------*/
 
-add_action('opening-times-after-reading-issue', 'art_direction_inline');
+add_action('before_header', 'art_direction_inline');
 function art_direction_inline() {
   // Only display art direction on reading post type
   if( 'reading' !== get_post_type() ) {
