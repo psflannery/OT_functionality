@@ -50,6 +50,6 @@ include_once( OT_DIR . '/inc/cmb2-metaboxes.php' );
 include_once( OT_DIR . '/inc/cmb2-fieldtypes.php' );
 include_once( OT_DIR . '/inc/cmb2-shortcode-button.php' );
 include_once( OT_DIR . '/inc/cmb2-shortcode-button-config.php' );
-include_once( OT_DIR . '/inc/customizer_full_screen_background.php');
+//include_once( OT_DIR . '/inc/customizer_full_screen_background.php');
 include_once( OT_DIR . '/inc/widget-contact-form.php' );
 include_once( OT_DIR . '/inc/extras.php' );

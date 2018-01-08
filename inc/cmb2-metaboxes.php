@@ -40,9 +40,7 @@ function opening_times_taxonomy_show_on_filter( $cmb ) {
 			$slugs = array( $slugs );
 		}
 
-		$terms = $post
-			? get_the_terms( $post, $taxonomy )
-			: wp_get_object_terms( $post_id, $taxonomy );
+		$terms = $post ? get_the_terms( $post, $taxonomy ) : wp_get_object_terms( $post_id, $taxonomy );
 
 		if ( ! empty( $terms ) ) {
 			foreach( $terms as $term ) {
@@ -388,17 +386,18 @@ function ot_repeatable_panels_metabox() {
 	$prefix = '_ot_panel_';
 
 	// Repeatable Field Groups
-	//$venue_page_group = new_cmb2_box( array(
 	$reading_slide_group = new_cmb2_box( array(
 		'id'            => $prefix . 'builder',
-		'title'         => esc_html__( 'Slide Panels', 'opening_times' ),
+		'title'         => esc_html__( 'Sections', 'opening_times' ),
 		'object_types'  => array( 'reading', ),
 		//'closed'        => true,
 		'show_on_cb'    => 'opening_times_taxonomy_show_on_filter',
 		'show_on_terms' => array(
 			'format' => array( 
+				'standard',
 				'slides',
-				'accordion-xl'
+				'accordion-xl',
+				'annotation'
 			),
 		),
 	) );
@@ -407,12 +406,11 @@ function ot_repeatable_panels_metabox() {
 	$reading_slide_group_field_id = $reading_slide_group->add_field( array(
 		'id'          => $prefix . 'slide',
 		'type'        => 'group',
-		'description' => esc_html__( 'Build the slides for the Reading Page', 'opening_times' ),
 		'options'     => array(
 			// {#} gets replaced by row number
-			'group_title'   => esc_html__( 'Slide {#}', 'opening_times' ),
-			'add_button'    => esc_html__( 'Add Another Slide', 'opening_times' ),
-			'remove_button' => esc_html__( 'Remove Slide', 'opening_times' ),
+			'group_title'   => esc_html__( 'Section {#}', 'opening_times' ),
+			'add_button'    => esc_html__( 'Add Another Section', 'opening_times' ),
+			'remove_button' => esc_html__( 'Remove Section', 'opening_times' ),
 			'sortable'      => true,
 		),
 	) );
@@ -428,6 +426,12 @@ function ot_repeatable_panels_metabox() {
     ) );
 
     $reading_slide_group->add_group_field( $reading_slide_group_field_id, array(
+        'name'        => esc_html__( 'Subtitle', 'opening_times' ),
+        'id'          => 'slide_sub-title',
+        'type'        => 'text',
+    ) );
+
+    $reading_slide_group->add_group_field( $reading_slide_group_field_id, array(
         'name'        => esc_html__( 'Text', 'opening_times' ),
         'id'          => 'slide_text',
         'type'        => 'wysiwyg',
@@ -436,6 +440,18 @@ function ot_repeatable_panels_metabox() {
 			'textarea_rows' => 10,
 			'teeny'         => true,
 	    	'quicktags'     => true
+		),
+    ) );
+
+    $reading_slide_group->add_group_field( $reading_slide_group_field_id, array(
+    	'name'          => esc_html__( 'Note', 'opening_times' ),
+        'id'            => 'slide_text_note',
+        'type'          => 'textarea_small',
+        'show_on_cb'    => 'opening_times_taxonomy_show_on_filter',
+		'show_on_terms' => array(
+			'format' => array( 
+				'annotation'
+			),
 		),
     ) );
 
@@ -456,21 +472,49 @@ function ot_repeatable_panels_metabox() {
 		'select_all_button' => false,
 		'inline'            => true,
 		//'default'           => 'top-left',
+		'show_on_cb'    => 'opening_times_taxonomy_show_on_filter',
+		'show_on_terms' => array(
+			'format' => array( 
+				'accordion-xl',
+			),
+		),
 	) );
     
     $reading_slide_group->add_group_field( $reading_slide_group_field_id, array(
     	'name'        => esc_html__( 'Background Color', 'opening_times' ),
     	'id'          => 'slide_bg',
         'type'        => 'colorpicker',
+		'show_on_cb'    => 'opening_times_taxonomy_show_on_filter',
+		'show_on_terms' => array(
+			'format' => array( 
+				'accordion-xl',
+			),
+		),
     ) );
 
     $reading_slide_group->add_group_field( $reading_slide_group_field_id, array(
-    	'name'        => esc_html__( 'Background Image', 'opening_times' ),
+    	'name'       => esc_html__( 'External Link', 'opening_times' ),
+    	'desc'       => esc_html__( 'Enter the URL of the page you wish to link to', 'opening_times' ),
+    	'id'         => 'link_url',
+    	'type'       => 'text_url',
+    	'protocols'  => array('http', 'https', 'ftp', 'ftps', 'mailto', 'news', 'irc', 'gopher', 'nntp', 'feed', 'telnet'),
+    	'repeatable' => true,
+    	'show_on_cb'    => 'opening_times_taxonomy_show_on_filter',
+		'show_on_terms' => array(
+			'format' => array( 
+				'standard',
+			),
+		),
+    ) );
+
+    $reading_slide_group->add_group_field( $reading_slide_group_field_id, array(
+    	'name'        => esc_html__( 'Image', 'opening_times' ),
     	'id'          => 'slide_bg_img',
         'type'        => 'file',
         'text'        => array(
 			'add_upload_file_text' => 'Add Image'
 		),
+		/*
 		'query_args' => array(
 			'type' => 'image/jpeg',
 			'type' => 'image/gif',
@@ -478,6 +522,15 @@ function ot_repeatable_panels_metabox() {
 			'type' => 'image/bmp',
 			'type' => 'image/tiff',
 			'type' => 'image/x-icon',
+		),
+		*/
+		'show_on_cb'    => 'opening_times_taxonomy_show_on_filter',
+		'show_on_terms' => array(
+			'format' => array( 
+				'accordion-xl',
+				'annotation',
+				'standard'
+			),
 		),
     ) );
 
@@ -492,6 +545,12 @@ function ot_repeatable_panels_metabox() {
 			// https://codex.wordpress.org/Function_Reference/get_allowed_mime_types
 			'type' => 'audio/mpeg',
 		),
+		'show_on_cb'    => 'opening_times_taxonomy_show_on_filter',
+		'show_on_terms' => array(
+			'format' => array( 
+				'accordion-xl',
+			),
+		),
     ) );
 
     $reading_slide_group->add_group_field( $reading_slide_group_field_id, array(
@@ -504,10 +563,16 @@ function ot_repeatable_panels_metabox() {
 		'query_args' => array(
 			'type' => 'video/mp4',
 		),
+		'show_on_cb'    => 'opening_times_taxonomy_show_on_filter',
+		'show_on_terms' => array(
+			'format' => array( 
+				'accordion-xl',
+			),
+		),
     ) );
 
     $reading_slide_group->add_group_field( $reading_slide_group_field_id, array(
-    	'name' => esc_html__( 'Background Embed', 'opening_times' ),
+    	'name' => esc_html__( 'Embed URL', 'opening_times' ),
     	'desc' => sprintf(
 			esc_html__( 'Enter a youtube, twitter, or instagram URL. Supports services listed at %s.', 'opening_times' ),
 			'<a href="https://codex.wordpress.org/Embeds">codex.wordpress.org/Embeds</a>'
@@ -529,13 +594,25 @@ function ot_repeatable_panels_metabox() {
 			'playsinline' => 'Plays Inline'
 		),
 		'select_all_button' => false,
-		'inline'            => true
+		'inline'            => true,
+		'show_on_cb'        => 'opening_times_taxonomy_show_on_filter',
+		'show_on_terms' => array(
+			'format' => array( 
+				'accordion-xl',
+			),
+		),
     ) );
 
     $reading_slide_group->add_group_field( $reading_slide_group_field_id, array(
-    	'name'              => esc_html__( 'Lazy Load Media', 'opening_times' ),
-    	'id'                => 'lazy_load',
-    	'type'              => 'checkbox',
+    	'name'          => esc_html__( 'Lazy Load Media', 'opening_times' ),
+    	'id'            => 'lazy_load',
+    	'type'          => 'checkbox',
+    	'show_on_cb'    => 'opening_times_taxonomy_show_on_filter',
+		'show_on_terms' => array(
+			'format' => array( 
+				'accordion-xl',
+			),
+		),
     ) );
 }
 
