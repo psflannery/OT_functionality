@@ -12,7 +12,7 @@
  * Plugin Name:	OT functionality
  * Plugin URI:	http://otdac.org
  * Description:	Core functionality for the Opening Times website. Registers functions that exist independently of the theme - Custom Post Types, Custom Taxonomies and other bits of goodness.
- * Version: 	2.0.2
+ * Version: 	2.0.3
  * Author: 		Paul Flannery
  * Author URI:	http://paulflannery.co.uk
  * Text Domain:	opening_times
