@@ -270,6 +270,7 @@ function ot_residency_dates_metabox() {
  * Reading
  *---------------------------------------------------------------*/
 
+/*
 add_action( 'cmb2_admin_init', 'ot_featured_work_reading_metabox' );
 function ot_featured_work_reading_metabox() {
 	$prefix = '_ot_';
@@ -281,6 +282,12 @@ function ot_featured_work_reading_metabox() {
 		'context'   	=> 'normal',
 		'priority'   	=> 'high',
 		'show_names' 	=> true,
+		'show_on_cb'    => 'opening_times_taxonomy_show_on_filter',
+		'show_on_terms' => array(
+			'format' => array( 
+				'standard',
+			),
+		),
 	) );
 	$featured_work_reading->add_field( array(
 		'name'		 => esc_html__( 'Embed URL', 'opening_times' ),
@@ -306,6 +313,7 @@ function ot_featured_work_reading_metabox() {
 		'type' 		 => 'file',
 	) );
 }
+*/
 
 add_action( 'cmb2_admin_init', 'ot_editorial_intro_metabox' );
 function ot_editorial_intro_metabox() {
@@ -462,12 +470,12 @@ function ot_repeatable_panels_metabox() {
 		'desc'             => esc_html__( 'The position of the text over the background image, if selected. Otheriwise the text will display below the image. (Optional)', 'opening_times' ),
 		'show_option_none' => 'No Selection',
 		'options' => array(
-			'sidebar'      => 'Sidebar',
-			'top-left'     => 'Top Left',
-			'top-right'    => 'Top Right',
-			'center'       => 'Center',
-			'bottom-left'  => 'Bottom Left',
-			'bottom-right' => 'Bottom Right',
+			'slide_text--sidebar'                           => 'Sidebar',
+			'slide__text-overlay slide__text--top-left'     => 'Top Left',
+			'slide__text-overlay slide__text--top-right'    => 'Top Right',
+			'slide__text-overlay slide__text--center'       => 'Center',
+			'slide__text-overlay slide__text--bottom-left'  => 'Bottom Left',
+			'slide__text-overlay slide__text--bottom-right' => 'Bottom Right',
 		),
 		'select_all_button' => false,
 		'inline'            => true,
@@ -554,6 +562,29 @@ function ot_repeatable_panels_metabox() {
     ) );
 
     $reading_slide_group->add_group_field( $reading_slide_group_field_id, array(
+		'name'    => esc_html__( 'Audio Attributes', 'opening_times' ),
+		'id'      => 'media_atts',
+		'type'    => 'multicheck',
+		'options' => array(
+			//'auto-play'        => 'Auto Play',
+			'data-autoplay'    => 'Auto Play',
+			'loop'             => 'Loop',
+			'controls'         => 'Controls',
+			'muted'            => 'Muted',
+			'data-keepplaying' => 'Keep Playing',
+			'playsinline'      => 'Plays Inline'
+		),
+		'select_all_button' => false,
+		'inline'            => true,
+		'show_on_cb'        => 'opening_times_taxonomy_show_on_filter',
+		'show_on_terms'     => array(
+			'format' => array( 
+				'accordion-xl',
+			),
+		),
+	) );
+
+    $reading_slide_group->add_group_field( $reading_slide_group_field_id, array(
     	'name'        => esc_html__( 'Background Video', 'opening_times' ),
     	'id'          => 'slide_bg_video',
         'type'        => 'file',
@@ -570,6 +601,29 @@ function ot_repeatable_panels_metabox() {
 			),
 		),
     ) );
+/////
+    $reading_slide_group->add_group_field( $reading_slide_group_field_id, array(
+		'name'    => esc_html__( 'Video Attributes', 'opening_times' ),
+		'id'      => 'media_atts_video',
+		'type'    => 'multicheck',
+		'options' => array(
+			//'auto-play'        => 'Auto Play',
+			'data-autoplay'    => 'Auto Play',
+			'loop'             => 'Loop',
+			'controls'         => 'Controls',
+			'muted'            => 'Muted',
+			'data-keepplaying' => 'Keep Playing',
+			'playsinline'      => 'Plays Inline'
+		),
+		'select_all_button' => false,
+		'inline'            => true,
+		'show_on_cb'        => 'opening_times_taxonomy_show_on_filter',
+		'show_on_terms'     => array(
+			'format' => array( 
+				'accordion-xl',
+			),
+		),
+	) );
 
     $reading_slide_group->add_group_field( $reading_slide_group_field_id, array(
     	'name' => esc_html__( 'Embed URL', 'opening_times' ),
@@ -579,28 +633,6 @@ function ot_repeatable_panels_metabox() {
 		),
     	'id'   => 'slide_bg_embed',
         'type' => 'oembed',
-    ) );
-
-    $reading_slide_group->add_group_field( $reading_slide_group_field_id, array(
-    	'name'              => esc_html__( 'Media Attributes', 'opening_times' ),
-    	'id'                => 'media_atts',
-    	'type'              => 'multicheck',
-    	'options' => array(
-			'auto-play'   => 'Auto Play',
-			'loop'        => 'Loop',
-			'controls'    => 'Controls',
-			'muted'       => 'Muted',
-			'keepplaying' => 'Keep Playing',
-			'playsinline' => 'Plays Inline'
-		),
-		'select_all_button' => false,
-		'inline'            => true,
-		'show_on_cb'        => 'opening_times_taxonomy_show_on_filter',
-		'show_on_terms' => array(
-			'format' => array( 
-				'accordion-xl',
-			),
-		),
     ) );
 
     $reading_slide_group->add_group_field( $reading_slide_group_field_id, array(
@@ -642,6 +674,12 @@ function ot_after_reading_list_metabox() {
 		'name'       => esc_html__( 'Submission Form', 'opening_times' ),
 		'desc'       => esc_html__( 'Add an article submission form to the end of the list of selected articles.', 'opening_times' ),
 		'id'         => $prefix . 'after_reading_post_submit',
+		'type'       => 'checkbox',
+	) );
+	$after_reading_list->add_field( array(
+		'name'       => esc_html__( 'Speed Reader', 'opening_times' ),
+		'desc'       => esc_html__( 'Speed read through the articles.', 'opening_times' ),
+		'id'         => $prefix . 'speed_read',
 		'type'       => 'checkbox',
 	) );
 }
